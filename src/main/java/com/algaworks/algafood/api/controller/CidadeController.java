@@ -49,7 +49,7 @@ public class CidadeController {
 	public ResponseEntity<Cidade> buscar(@PathVariable Long cidadeId) {
 		Optional<Cidade> cidade = cidadeRepository.findById(cidadeId);
 		
-		if (cidade.isEmpty()) {
+		if (cidade.isPresent()) {
 			return ResponseEntity.ok(cidade.get());
 		}
 		
@@ -73,13 +73,13 @@ public class CidadeController {
 	public ResponseEntity<?> atualizar(@PathVariable Long cidadeId,
 			@RequestBody Cidade cidade) {
 		try {
-			Optional<Cidade> cidadeAtual = cidadeRepository.findById(cidadeId);
+			Cidade cidadeAtual = cidadeRepository.findById(cidadeId).orElse(null);
 			
-			if (cidadeAtual.isPresent()) {
+			if (cidadeAtual != null) {
 				BeanUtils.copyProperties(cidade, cidadeAtual, "id");
 				
-				Cidade cidadeSalva = cadastroCidadeService.salvar(cidadeAtual.get());
-				return ResponseEntity.ok(cidadeSalva);
+				cidadeAtual = cadastroCidadeService.salvar(cidadeAtual);
+				return ResponseEntity.ok(cidadeAtual);
 			}
 			
 			return ResponseEntity.notFound().build();
