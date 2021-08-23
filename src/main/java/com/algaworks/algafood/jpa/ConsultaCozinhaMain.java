@@ -29,7 +29,7 @@ public class ConsultaCozinhaMain {
 		
 		CozinhaRepository cozinhaRepository = applicationContext.getBean(CozinhaRepository.class);
 		
-		List<Cozinha> cozinhas = cozinhaRepository.listar();
+		List<Cozinha> cozinhas = cozinhaRepository.findAll();
 		
 		System.out.println(cozinhas.size());
 
