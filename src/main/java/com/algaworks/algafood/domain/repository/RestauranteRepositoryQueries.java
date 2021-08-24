@@ -14,4 +14,6 @@ import com.algaworks.algafood.model.Restaurante;
  */
 public interface RestauranteRepositoryQueries {
 	List<Restaurante> find(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal);
-}
+	
+	List<Restaurante> findComFretaGratis(String nome);
+}	
